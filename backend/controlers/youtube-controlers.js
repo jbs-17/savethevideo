@@ -1,0 +1,23 @@
+import { getRawFormats } from '../services/service-get-raw-formats.js';
+import { filterYoutubeFormats } from '../services/youtube-filter-youtube-formats.js';
+
+
+
+export default getYoutubeFormatsHandler;
+export { getYoutubeFormatsHandler }
+/**
+ * Controller untuk menangani permintaan daftar format video dari URL YouTube
+ */
+async function getYoutubeFormatsHandler(req, res) {
+  const url = req.query.url;
+  if (!url) {
+    return res.status(400).json({ error: 'Parameter URL wajib disediakan.' });
+  }
+  try {
+    const { stdout, stderr } = await getRawFormats(url);
+    const safeFormats = await filterYoutubeFormats(stdout); // parser khusus YouTube
+    return res.json({ formats: safeFormats });
+  } catch (err) {
+    return res.status(500).json({ error: 'Gagal mengambil format video.', detail: err.message });
+  }
+}

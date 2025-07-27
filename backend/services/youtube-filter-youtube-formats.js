@@ -1,4 +1,5 @@
-
+export { filterYoutubeFormats };
+export default filterYoutubeFormats;
 /**
  * Memfilter daftar format video dan audio aman yang tersedia dari URL YouTube yang di proses `yt-dlp -F <URL_VIDEO_YOUTUBE>`.
  * 
@@ -6,7 +7,7 @@
  * @param {string} formats daftar formats yang didapatkan dari `yt-dlp -F <URL_VIDEO_YOUTUBE>`.
  * @returns {Promise<Array>} Promise yang megembalikan array berisi list format yang aman
  */
-export default async function safeYoutubeFormats(formats) {
+async function filterYoutubeFormats(formats) {
   const rows = formats
     .split('\n')
     .map(r => r.trim())
