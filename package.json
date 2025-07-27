@@ -1,0 +1,25 @@
+{
+  "name": "savethevideo",
+  "version": "1.0.0",
+  "description": "save youtube video in various format",
+  "keywords": [
+    "download",
+    "youtube",
+    "video"
+  ],
+  "homepage": "https://github.com/jbs-17/savethevideo#readme",
+  "bugs": {
+    "url": "https://github.com/jbs-17/savethevideo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbs-17/savethevideo.git"
+  },
+  "license": "ISC",
+  "author": "jbs",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
