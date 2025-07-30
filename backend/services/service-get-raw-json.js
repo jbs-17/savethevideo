@@ -1,10 +1,10 @@
 import execPromise from "../utils/exec-promise.js";
 
-export default getRawFormats;
-export {getRawFormats}
+export default getRawJSON;
+export { getRawJSON }
 /**
- * Mengambil daftar format video dan audio yang tersedia dari URL menggunakan yt-dlp.
- * Ini setara dengan menjalankan perintah `yt-dlp -F <URL_VIDEO>`.
+ * Mengambil data json video dan audio yang tersedia dari URL menggunakan yt-dlp.
+ * Ini setara dengan menjalankan perintah `yt-dlp -J <URL_VIDEO>`.
  *
  * @async
  * @param {string} url URL video YouTube yang ingin diperiksa formatnya.
@@ -15,8 +15,8 @@ export {getRawFormats}
  * (misalnya, yt-dlp tidak terinstal, URL tidak valid/tidak ditemukan oleh yt-dlp, atau masalah jaringan).
  * Objek error ini mungkin memiliki properti tambahan seperti `code` (exit code) dan `stderr` (pesan error dari yt-dlp).
  */
- async function getRawFormats(url) {
-  const command = `yt-dlp -F "${url}"`;
+async function getRawJSON(url) {
+  const command = `yt-dlp -J "${url}"`;
   try {
     // Diasumsikan execPromise sudah didefinisikan dengan benar dan mengembalikan Promise
     const { stdout, stderr } = await execPromise(command);
