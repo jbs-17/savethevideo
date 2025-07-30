@@ -1,5 +1,6 @@
 import { getRawFormats } from '../services/service-get-raw-formats.js';
 import { filterYoutubeFormats } from '../services/youtube-filter-youtube-formats.js';
+import { db, initDatabase, client } from './db.js';
 
 
 
@@ -15,8 +16,14 @@ async function getYoutubeFormatsHandler(req, res) {
   }
   try {
     const { stdout, stderr } = await getRawFormats(url);
+    if(!stdout.toLowerCase().includes('youtu')){
+      return res.json({
+        status: 'error',
+        message: "invalid YouTube video url"
+      })
+    }
     const safeFormats = await filterYoutubeFormats(stdout); // parser khusus YouTube
-    return res.json({ formats: safeFormats });
+    return res.json({ formats: safeFormats, status: true, message: "success fetch avwailable download formats of video" });
   } catch (err) {
     return res.status(500).json({ error: 'Gagal mengambil format video.', detail: err.message });
   }

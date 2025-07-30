@@ -1,10 +1,11 @@
 import dotenv from "dotenv";'dotenv';
-
+import 'dotenv/config';
 dotenv.config();
-const config = {};
-console.log(process.env.PORT);
-config.PORT = process.env.PORT || 2999;
 
+
+const config = {};
+config.PORT = process.env.PORT || 3000;
+config.MONGODB_URI = process.env.MONGODB_URI;
 
 
 
