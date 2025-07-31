@@ -12,9 +12,14 @@ import youtube from "./routers/youtube.js";
 
 //handler
 import { rootHandler } from "./handlers/rootHandler.js";
+import { aboutHandler } from "./handlers/aboutHandler.js";
 
 //app
 const app = express();
+
+//view engine
+app.set('view engine', 'ejs');
+app.set('views', config.viewsdir)
 
 //middlewares
 app.use([globalMiddleware,globalLimiter,globalLogging]);
@@ -23,6 +28,10 @@ app.use(express.json());
 
 //routers
 app.get("/", rootHandler);
+app.get('/about', aboutHandler);
+
+
+
 app.use("/api/youtube", youtube);
 
 

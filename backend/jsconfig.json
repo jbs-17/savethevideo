@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "checkJs": true, // Mengaktifkan pemeriksaan tipe di file JS
+    "target": "es2022", // Target ES versi
+    "module": "es2022", // Tipe modul
+    "moduleResolution": "node", // Cara mencari modul
+    "allowJs": true, // Memungkinkan file JS dalam proyek
+    "noEmit": true, // Hanya untuk pemeriksaan tipe, tidak menghasilkan JS baru
+    "esModuleInterop": true, // Kompatibilitas untuk import/export
+    "forceConsistentCasingInFileNames": true,
+    "strict": true, // Mengaktifkan mode strict TypeScript (bagus untuk JS juga)
+    "skipLibCheck": true,
+    "types": ["node", "express", "mongodb"] // Memberi tahu VS Code untuk menyertakan definisi tipe ini
+  },
+  "include": [
+    "**/*.js",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.d.js" // Penting: Sertakan file JSDoc alias Anda
+  ],
+  "exclude": [
+    "node_modules",
+    "dist" // Jika Anda punya folder build
+  ]
+}

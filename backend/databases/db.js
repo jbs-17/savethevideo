@@ -6,8 +6,11 @@ const client = new MongoClient(uri, {
   maxPoolSize: 10,
   serverSelectionTimeoutMS: 15000,
 });
-let db;
 
+/**
+ * @type {import('mongodb').Db}
+ */
+let db;
 async function initDatabase() {
   try {
     await client.connect();
@@ -18,5 +21,5 @@ async function initDatabase() {
     throw err;
   }
 }
-initDatabase()
+await initDatabase();
 export { db, initDatabase, client };
