@@ -18,5 +18,5 @@ async function initDatabase() {
     throw err;
   }
 }
-
+initDatabase()
 export { db, initDatabase, client };

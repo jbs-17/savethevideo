@@ -1,9 +1,9 @@
 import { db, initDatabase, client } from './db.js';
 
-async function insertUser(userData) {
+async function insertVideo(jsondata) {
   try {
-    const collection = db.collection('users');
-    const response = await collection.insertOne(userData);
+    const collection = db.collection('video');
+    const response = await collection.insertOne(jsondata);
     console.log('Insert successful:', { response });
     return response;
   } catch (err) {
@@ -20,16 +20,6 @@ async function insertUser(userData) {
   }
 }
 
-async function main() {
-  try {
-    await initDatabase();
-    await insertUser({ nama: 'Kebo Ijo', email: 'kebo@ijo.xyz' });
-  } catch (err) {
-    console.error('Main error:', err.message);
-  } finally {
-    await client.close(); // Tutup koneksi untuk script sekali jalan
-    console.log('Connection closed');
-  }
-}
 
-main();
+export default {insertVideo}
+export {insertVideo}

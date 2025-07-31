@@ -1,52 +1,44 @@
-import config from './configs/config.js';
-import express from 'express';
-import rateLimit from 'express-rate-limit';
-import cookieParser from 'cookie-parser';
-import chalk from 'chalk';
+import config from "./configs/config.js";
+import express from "express";
+import cookieParser from "cookie-parser";
 
-//
-import youtube from './routes/youtube-route.js'
+//middlewares
+import { globalMiddleware } from "./middlewares/globalMiddleware.js";
+import { globalLimiter } from "./middlewares/globalLimiter.js";
+import { globalLogging } from "./middlewares/globalLogging.js";
 
-const limiter = rateLimit({
-  windowMs: 1000 * 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  max: 1,
-  handler: (req, res, next, options) => {
-    res.status(429)
-      .json({
-        status: 'error',
-        message: `terlalu banyak rekwes untuk ${req.ip} ! coba lagi setelah beberapa saat!`,
-        ip: req.ip,
-        ...res.getHeaders()
-      })
-  },
-})
+//routers
+import youtube from "./routers/youtube.js";
 
+//handler
+import { rootHandler } from "./handlers/rootHandler.js";
 
-
+//app
 const app = express();
+
+//middlewares
+app.use([globalMiddleware,globalLimiter,globalLogging]);
 app.use(cookieParser());
-app.use(limiter);
+app.use(express.json());
+
+//routers
+app.get("/", rootHandler);
+app.use("/api/youtube", youtube);
+
+
+//404 handler
 app.use((req, res, next) => {
-  const { ip, method, url, path, cookies, } = req;
-  const start = Date.now();
-  res.on('finish', () => {
-    console.log(chalk.rgb(200, 200, 200).bgRgb(0, 0, 0)(` ${ip} `) + chalk.rgb(255, 255, 255).bgRgb(25, 25, 25)(` ${method} `) + chalk.rgb(255, 253, 253).bgRgb(40, 40, 40)(` ${path} `) + chalk.bgRgb(255, 255, 255).rgb(0, 0, 0)(` ${Date.now() - start} `));
-  })
-  res.set('x-author', 'jbs');
-  next();
-})
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.status(404).send('Not Found'); // Or render a custom 404 page
 });
 
-app.use('/api/youtube/', youtube)
 
+//general error handling;
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log the error for debugging
+  res.status(500).send('Something broke!'); // Send a generic error response
+});
 
+//litsten 
 app.listen(config.PORT, () => {
-  console.log(`app listening on port ${config.PORT}`);
+    console.log(`app listening on port ${config.PORT}`);
 });

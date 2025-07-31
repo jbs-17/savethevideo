@@ -35,10 +35,12 @@ function getDataJSON(url) {
 export { getDataJSON }
 export default { getDataJSON }
 
+
+
 try {
   // console.log(await getDataJSON("https://www.tiktok.com/@kangdedicolltions/video/7530193845074578706?is_from_webapp=1&sender_device=pc"));
   // console.log(await getDataJSON("https://www.tiktok.com/@ngtrjdn"));
-  console.log(await getDataJSON("https://www.youtube.com/watch?v=sORpofv3ESM&list=PLcooF13HWc21Ds5yVJnDBxEjK41h-PtK5&index=2"));
+  //console.log(await getDataJSON("https://www.youtube.com/watch?v=sORpofv3ESM&list=PLcooF13HWc21Ds5yVJnDBxEjK41h-PtK5&index=2"));
 } catch (error) {
   console.log(error);
 }
