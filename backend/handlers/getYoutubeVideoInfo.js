@@ -1,27 +1,62 @@
 import { getDataJSON } from "../services/getDataJSON.js";
+import { youtubeFindVideo } from "../databases/youtubeFindVideo.js";
+import { youtubeInsertVideo } from "../databases/youtubeInsertVideo.js";
 
 export default getYoutubeVideoInfo;
 export { getYoutubeVideoInfo };
-/**
- * Controller untuk menangani permintaan  video dari URL YouTube
- */
+
 async function getYoutubeVideoInfo(req, res) {
     try {
         const url = req.query.url;
         if (!url || url.length <= 16) {
-            return res
-                .status(400)
-                .json({
-                    status: false,
-                    error: "Parameter URL wajib disediakan."
-                });
+            return res.status(400).json({
+                status: false,
+                error: "Parameter URL wajib disediakan."
+            });
         }
+        let dataVideo = null;
+        //cari di db jika ada
+        const findVideo = await youtubeFindVideo(url);
+        if (findVideo.status) {
+            dataVideo = findVideo.data;
+        }
+        if (!findVideo.status) {
+            dataVideo = await getDataJSON(url);
+            dataVideo.url = url;
+        }
+        //check apakah youtube
+        const is = isYoutube(dataVideo);
 
-        res.json({ status: true, data: null });
+        if (is) {
+            res.json({ status: true, data: dataVideo, url });
+            await youtubeInsertVideo(dataVideo);
+        } else {
+            res.json({
+                status: false,
+                data: null,
+                message: "invalid youtube url"
+            });
+        }
     } catch (error) {
         return res.status(500).json({
-            error: "Gagal mengambil format video.",
-            detail: err.message
+            status: false,
+            message: "Gagal mengambil format video.",
+            error
         });
     }
+}
+
+function isYoutube(dataVideo) {
+    const values = Object.values(dataVideo);
+    let count = 0;
+    for (const value of values) {
+        if (typeof value !== "string") {
+            continue;
+        }
+        if (value.includes("you")) {
+            count++;
+        }
+    }
+
+    return count > 5;
 }

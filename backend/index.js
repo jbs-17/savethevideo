@@ -17,6 +17,12 @@ import { aboutHandler } from "./handlers/aboutHandler.js";
 //app
 const app = express();
 
+//
+app.get("/", rootHandler);
+app.get('/sw.js', (req, res)=>{
+  res.send('alert();');
+})
+
 //view engine
 app.set('view engine', 'ejs');
 app.set('views', config.viewsdir)
@@ -27,7 +33,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 //routers
-app.get("/", rootHandler);
 app.get('/about', aboutHandler);
 
 
@@ -43,7 +48,7 @@ app.use((req, res, next) => {
 
 //general error handling;
 app.use((err, req, res, next) => {
-  console.error(err.stack); // Log the error for debugging
+  console.error("ERRRRRRPPPRRR",err.stack); // Log the error for debugging
   res.status(500).send('Something broke!'); // Send a generic error response
 });
 

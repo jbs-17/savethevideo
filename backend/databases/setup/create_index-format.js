@@ -1,18 +1,20 @@
-import { db, initDatabase, client } from '../db.js';
+import { db, initDatabase, client } from "../db.js";
 
 async function createUniqueIndex() {
-  try {
-    await initDatabase();
-    const collection = db.collection('formats');
-    await collection.createIndex({ url: 1 }, { unique: true });
-    console.log('Unique index created on url');
-  } catch (err) {
-    console.error('Error creating index:', err.message);
-    throw err;
-  } finally {
-    await client.close();
-    console.log('Connection closed');
-  }
+    try {
+        await initDatabase();
+        db.createCollection("youtube_video", {
+            capped: false,
+            expireAfterSeconds: 300 // Dokumen akan dihapus setelah 1 jam
+        });
+        
+    } catch (err) {
+        console.error("Error creating index:", err.message);
+        throw err;
+    } finally {
+        await client.close();
+        console.log("Connection closed");
+    }
 }
 
 createUniqueIndex();
