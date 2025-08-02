@@ -17,7 +17,8 @@ async function initDatabase() {
     db = client.db('savethevideo');
     console.log('Database initialized');
   } catch (err) {
-    console.error('Failed to connect to MongoDB:', err.message);
+    console.error('Failed to connect to MongoDB:');
+    process.exit(1);
     throw err;
   }
 }

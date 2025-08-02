@@ -2,6 +2,6 @@
   "watch": ["*.js"],
   "ignore": ["node_modules", "*.json", "temp"],
   "ext": "js,ts,json,njk",
-  "delay": "1.5",
+  "delay": "2.5",
   "verbose": true
 }
