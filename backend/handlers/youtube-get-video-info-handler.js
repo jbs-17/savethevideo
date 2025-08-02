@@ -1,6 +1,6 @@
-import { getDataJSON } from "../services/getDataJSON.js";
-import { youtubeFindVideo } from "../databases/youtubeFindVideo.js";
-import { youtubeInsertVideo } from "../databases/youtubeInsertVideo.js";
+import { getDataYTDLP } from "../services/get-data-ytdlp-service.js";
+import { youtubeFindVideo } from "../databases/youtube-find-video-db.js";
+import { youtubeInsertVideo } from "../databases/youtube-insert-video-db.js";
 
 export default getYoutubeVideoInfo;
 export { getYoutubeVideoInfo };
@@ -21,7 +21,7 @@ async function getYoutubeVideoInfo(req, res) {
             dataVideo = findVideo.data;
         }
         if (!findVideo.status) {
-            dataVideo = await getDataJSON(url);
+            dataVideo = await getDataYTDLP(url);
             dataVideo.url = url;
         }
         //check apakah youtube

@@ -12,7 +12,7 @@ import fs from 'node:fs/promises';
  * @returns {Promise<{"title", "tipe"?}>} megembalikan JSON data suatu media yang dapat di unduh lewat `yt-dlp` (image, )
  * @throws {Error}
  */
-function getDataJSON(url) {
+function getDataYTDLP(url) {
   const tempfile = path.join(config.tempdir, randomUUID() + '.json');
   return new Promise((resolve, reject) => {
     exec(`yt-dlp -J --encoding utf8 "${url}" > ${tempfile}`, async (error, stdout, stderr) => {
@@ -32,15 +32,5 @@ function getDataJSON(url) {
     });
   })
 }
-export { getDataJSON }
-export default { getDataJSON }
+export { getDataYTDLP }
 
-
-
-try {
-  // console.log(await getDataJSON("https://www.tiktok.com/@kangdedicolltions/video/7530193845074578706?is_from_webapp=1&sender_device=pc"));
-  // console.log(await getDataJSON("https://www.tiktok.com/@ngtrjdn"));
-  //console.log(await getDataJSON("https://www.youtube.com/watch?v=sORpofv3ESM&list=PLcooF13HWc21Ds5yVJnDBxEjK41h-PtK5&index=2"));
-} catch (error) {
-  console.log(error);
-}

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getYoutubeVideoInfo } from '../handlers/getYoutubeVideoInfo.js';
+import { getYoutubeVideoInfo } from '../handlers/youtube-get-video-info-handler.js';
 
 const youtube = express.Router();
 

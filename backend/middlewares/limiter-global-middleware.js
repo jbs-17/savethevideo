@@ -3,7 +3,7 @@ const globalLimiter = rateLimit({
   windowMs: 1000 * 1,
   standardHeaders: true,
   legacyHeaders: false,
-  max: 1,
+  max: 5,
   handler: (req, res, next, options) => {
     res.status(429)
       .json({

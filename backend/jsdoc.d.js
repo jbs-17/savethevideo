@@ -1,7 +1,17 @@
 // jsdoc.d.js
 /**
  * @typedef {import('express').Request} ExpressRequest - Objek permintaan Express.
- * @typedef {import('express').Response} ExpressResponse - Objek respons Express.
+ * @typedef {import("express").Response & {
+ *   success: (message: string, data?: any) => void,
+ *   fail: (message: string, data?: any, error?: any) => void
+ * }} ExpressResponse - Objek respons Express.
+ */
+
+/**
+ * @typedef {import("express").Response & {
+ *   success: (message: string, data?: any) => void,
+ *   fail: (message: string, data?: any, error?: any) => void
+ * }} ExtendedResponse
  */
 
 /**

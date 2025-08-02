@@ -8,17 +8,17 @@ import cookieParser from "cookie-parser";
 import './databases/db.js';
 
 // middlewares
-import { globalMiddleware } from "./middlewares/globalMiddleware.js";
-import { globalLimiter } from "./middlewares/globalLimiter.js";
-import { globalLogging } from "./middlewares/globalLogging.js";
-import { responseWrapper } from "./middlewares/responseWrapper.js";
+import { globalMiddleware } from "./middlewares/global-middleware.js";
+import { globalLimiter } from "./middlewares/limiter-global-middleware.js";
+import { globalLogging } from "./middlewares/global-logging-middleware.js";
+import { responseWrapper } from "./middlewares/response-wrapper-middleware.js";
 
 // routers
-import { user } from './routers/user.js';
+import { user } from './routers/user-router.js';
 
 // handlers
-import { rootHandler } from "./handlers/rootHandler.js";
-import { aboutHandler } from "./handlers/aboutHandler.js";
+import { rootHandler } from "./handlers/root-handler.js";
+import { aboutHandler } from "./handlers/about-handler.js";
 
 // app
 const app = express();
