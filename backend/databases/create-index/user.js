@@ -2,13 +2,14 @@ import { db } from "../db.js";
 
 
 try {
-  await db.collection('user').createIndexes([
-    { key: { username: 1 }, unique: true },
-    { key: { email: 1 }, unique: true },
-    { key: { phone: 1 }, unique: true },
-    { key: { uuid: 1 }, unique: true }])
-    console.log('berhasil membuat index');
+  const collection = await db.collection('user');
+  collection.createIndex({ email: 1 }, { unique: true, partialFilterExpression: { email: { $type: "string" } } });
+  collection.createIndex({ phone: 1 }, { unique: true, partialFilterExpression: { phone: { $type: "string" } } });
+  collection.createIndex({ uuid: 1 }, { unique: true, partialFilterExpression: { phone: { $type: "string" } } });
+  collection.createIndex({ username: 1 }, { unique: true, partialFilterExpression: { phone: { $type: "string" } } });
+
+  console.log('berhasil membuat index');
 } catch (error) {
-console.log(error);
+  console.log(error);
 }
 
