@@ -24,18 +24,16 @@ const { isEmail, isMobilePhone } = validator;
  * @param {string} [param0.phone=''] 
  * @param {string} param0.password
  */
-// services/user-register-service.js
 export async function userRegisterService({ email = '', phone = '', password }) {
   const isValid = email
     ? (isEmail(email) ? true : 'invalid email format')
     : (isMobilePhone(phone) ? true : 'invalid phone format');
 
   if (isValid !== true) {
-    throw new Error(isValid);
+    throw new AppError(isValid, 400);
   }
   if (phone === '') phone = null;
   if (email === '') email = null;
-  if (password.length <= 8) throw new AppError('password length must greather than 7', 200)
   const user = {
     username: usernameGenerator(),
     email,
