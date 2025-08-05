@@ -11,14 +11,13 @@ import { AppError } from "../services/app-error-service.js";
  */
 export async function createUser(user) {
   try {
-    await db.collection("user").insertOne(user);
+    return await db.collection("user").insertOne(user);
   } catch (err) {
     if (err instanceof MongoError)
       if (err.code === 11000) {
         // duplikat entri
         throw new AppError("Email or phone already registered", 409);
       }
-      console.log(err);
     throw err; // lempar ke handler kalau error selain itu
   }
 }

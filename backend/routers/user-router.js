@@ -15,7 +15,7 @@ user.use(userGLobal);
 // @ts-ignore
 user.post('/register', userRegister);
 
-// user.post('/login', userLogin);
+user.post('/login', userLogin);
 
 // user.post('/logout', userLogout);
 
