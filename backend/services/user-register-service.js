@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 
 import { createUser } from "../databases/user-create-db.js";
 
-import { hashPassword } from "../utils/hashPassword.js";
+import { hashPassword } from "../utils/user-password.js";
 
 import validator from 'validator';
 import { usernameGenerator } from "../utils/username-generator.js";

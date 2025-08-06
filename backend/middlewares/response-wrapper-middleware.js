@@ -1,11 +1,12 @@
 // middlewares/responseWrapper.js
 
 export function responseWrapper(req, res, next) {
-  res.success = function (message = "Success", data = {}) {
+  res.success = function (message = "Success", data = {}, error) {
     return res.json({
       status: true,
       message,
-      data
+      data,
+      error
     });
   };
 
