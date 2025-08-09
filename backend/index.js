@@ -49,8 +49,9 @@ app.use((req, res) => {
 
 // general error handling
 app.use((err, req, res, next) => {
-  console.error(err); // opsional, logging error
-  res.status(500).json({ status: false, message: "Internal server error", data: null, error: err });
+  console.error(err.message); // opsional, logging error
+  
+  res.status(500).json({ status: false, message: err.message || "Internal server error", data: null, error: err });
 });
 
 // listen

@@ -9,9 +9,10 @@ import { db } from "./db.js";
  * @async
  * @param {string} identifier email || phone || username
  */
-export async function userLoginFindDB(identifier) {
+export async function userFindByIdentifierDB(identifier) {
   return await db.collection("user").findOne({
     $or: [
+      { _id: identifier },
       { username: identifier },
       { email: identifier },
       { phone: identifier }

@@ -10,7 +10,7 @@ export function responseWrapper(req, res, next) {
     });
   };
 
-  res.fail = function (message = "Failed", data = {}, error = Error('failed')) {
+  res.fail = function (message = "Failed", data = null, error = new Error('failed')) {
     return res.json({
       status: false,
       message,

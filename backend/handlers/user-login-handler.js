@@ -1,5 +1,5 @@
+import { AppError } from '../services/app-error-service.js';
 import { userLoginService } from '../services/user-login-services.js';
-
 const identifierFields = ["username", "email", "phone"];
 
 /**
@@ -13,17 +13,22 @@ const identifierFields = ["username", "email", "phone"];
 export const userLogin = async (req, res) => {
     const { username, email, phone, password } = req.body;
     if (!password) return res.status(400).fail("password field required!");
-    let identifier;
+
+    let identifier = [];
     for (const i in req.body) {
-        if (i !== "password" && identifierFields.includes(i)) {
-            identifier = i;
-        }
+        if (i !== "password" && identifierFields.includes(i))
+            identifier.push(i);
     }
-    if (!identifier)
-        return res.status(400).fail("one identifier field required!");
+    if (!identifier || identifier.length > 1)
+        return res.status(400).fail("identifier error! please use only one identifier!", { username, email, phone });
     try {
-        (await userLoginService(req.body[identifier], password)) ? console.log(0) : console.log(1); return res.status(200).success("login succes", user);
+        const loggedin = (await userLoginService(req.body[identifier[0]], password));
+        if (loggedin?.status) {
+            res.success('login succesfull', loggedin);
+        } else {
+            res.fail("login failed", loggedin);
+        }
     } catch (error) {
-        return res.status(500 || error.statusCode).fail(error.message);
-    }
-};
+        return res.status(error.statusCode || 500).fail(error.message);
+    };
+}

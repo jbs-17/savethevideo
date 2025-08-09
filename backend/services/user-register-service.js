@@ -32,17 +32,17 @@ export async function userRegisterService({ email = '', phone = '', password }) 
   if (isValid !== true) {
     throw new AppError(isValid, 400);
   }
-  if (phone === '') phone = null;
-  if (email === '') email = null;
   const user = {
     username: usernameGenerator(),
     email,
     phone,
     password: hashPassword(password),
-    uuid: randomUUID(),
+    _id: randomUUID().replaceAll('-', 'U'),
     createdAt: new Date(),
     updateAt: new Date()
   };
+  if (phone === '') delete user.phone;
+  if (email === '') delete user.email;
   const result = await createUser(user);
   return { username: user.username, email, phone, uuid: user.uuid };
 }
