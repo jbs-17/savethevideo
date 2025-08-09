@@ -34,3 +34,11 @@ function getDataYTDLP(url) {
 }
 export { getDataYTDLP }
 
+try {
+ const data =  await getDataYTDLP('https://youtu.be/Os0bROgQ_ZY?feature=shared');
+ console.log('ok');
+ process.exit(0)
+} catch (err) {
+  console.error('Error:', err);
+}
+

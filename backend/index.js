@@ -15,7 +15,7 @@ import { responseWrapper } from "./middlewares/response-wrapper-middleware.js";
 
 // routers
 import { user } from './routers/user-router.js';
-import { youtube } from './routers/youtube.js';
+import { tiktok } from './routers/tiktok.js';
 // handlers
 import { rootHandler } from "./handlers/root-handler.js";
 import { aboutHandler } from "./handlers/about-handler.js";
@@ -40,8 +40,8 @@ app.use([
 ]);
 
 // routers
-app.use('/api/user', user);
-app.use('/api/youtube', youtube)
+app.use('/savethevideo/api/user', user);
+app.use('/savethevideo/api/tiktok', tiktok);
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ status: false, message: "Not found", data: null });
