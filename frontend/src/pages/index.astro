@@ -1,11 +1,50 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import "../styles/global.css";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tailwind Cheat Sheet Demo</title>
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-6 text-gray-900 dark:text-gray-100">
+    <h1 class="text-3xl font-bold text-center mb-6">🚀 Tailwind + Astro Demo</h1>
+
+    <!-- Responsive Typography -->
+    <section class="bg-white dark:bg-gray-800 p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">Responsive Typography</h2>
+      <p class="text-sm sm:text-base md:text-lg lg:text-xl">Resize browser untuk lihat perubahan ukuran font.</p>
+    </section>
+
+    <!-- Responsive Grid -->
+    <section class="bg-white dark:bg-gray-800 p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">Responsive Grid</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="bg-blue-200 dark:bg-blue-700 p-4 rounded">Item 1</div>
+        <div class="bg-blue-300 dark:bg-blue-600 p-4 rounded">Item 2</div>
+        <div class="bg-blue-400 dark:bg-blue-500 p-4 rounded">Item 3</div>
+      </div>
+    </section>
+
+    <!-- Dark Mode Colors -->
+    <section class="bg-white dark:bg-gray-800 p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">Dark Mode Colors</h2>
+      <div class="flex gap-4">
+        <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700"></div>
+        <div class="w-16 h-16 bg-green-200 dark:bg-green-700"></div>
+        <div class="w-16 h-16 bg-pink-200 dark:bg-pink-700"></div>
+      </div>
+    </section>
+
+    <!-- Buttons Responsive + Dark -->
+    <section class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+      <h2 class="text-xl font-semibold mb-2">Buttons</h2>
+      <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded transition">
+        Primary
+      </button>
+      <button class="px-4 py-2 bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded transition">
+        Secondary
+      </button>
+    </section>
+  </body>
+</html>

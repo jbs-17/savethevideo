@@ -1,0 +1,18 @@
+---
+import "../styles/global.css";
+import TopNav from "../components/TopNav.astro";
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title || ""} | SaveTheVideo</title>
+  </head>
+  <body class="bg-gray-100 text-gray-900">
+    <TopNav />
+    <main class="pt-[72px]">
+      <slot />
+    </main>
+  </body>
+</html>

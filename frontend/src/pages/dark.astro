@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Astro + Tailwind Dark Mode Toggle</title>
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-6 text-gray-900 dark:text-gray-100 transition-colors">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold">🌙 Dark Mode Toggle</h1>
+      <button id="toggle-theme" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Toggle Dark Mode
+      </button>
+    </div>
+
+    <section class="bg-white dark:bg-gray-800 p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">Contoh Konten</h2>
+      <p class="text-sm sm:text-base md:text-lg">Coba klik tombol di atas untuk mengubah tema.</p>
+    </section>
+
+    <script is:inline>
+      // Saat halaman load, cek localStorage
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+
+      // Toggle button
+      document.getElementById('toggle-theme').addEventListener('click', () => {
+        const html = document.documentElement;
+        if (html.classList.contains('dark')) {
+          html.classList.remove('dark');
+          localStorage.theme = 'light';
+        } else {
+          html.classList.add('dark');
+          localStorage.theme = 'dark';
+        }
+      });
+    </script>
+  </body>
+</html>
