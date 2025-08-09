@@ -1,6 +1,6 @@
 ---
-import "../styles/global.css";
 import TopNav from "../components/TopNav.astro";
+import "../styles/global.css";
 const { title } = Astro.props;
 ---
 
@@ -11,8 +11,8 @@ const { title } = Astro.props;
   </head>
   <body class="bg-gray-100 text-gray-900">
     <TopNav />
-    <main class="pt-[72px]">
-      <slot />
+    <main>
+      <slot/>
     </main>
   </body>
 </html>
