@@ -1,4 +1,141 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "../layouts/Layout.astro";
+const { BACKEND } = process.env;
 ---
-<BaseLayout slot={'apakah'} />
+
+<Layout title="Login">
+  <section class="min-h-[90vh] flex items-center justify-center bg-gray-50">
+    <div class="w-full max-w-md bg-white rounded-lg shadow p-6">
+      <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
+
+      <form id="loginForm" class="space-y-4" novalidate>
+        <!-- Email / Username -->
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700"
+            >Email / Phone /Username</label
+          >
+          <input
+            value="081229439547"
+            id="username"
+            name="username"
+            type="text"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+          />
+          <p id="usernameError" class="text-sm text-red-600 mt-1 hidden"></p>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700"
+            >Password</label
+          >
+          <input
+            value="passwodrahasia"
+            id="password"
+            name="password"
+            type="password"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+          />
+          <p id="passwordError" class="text-sm text-red-600 mt-1 hidden"></p>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center">
+            <input
+              type="checkbox"
+              class="h-4 w-4 text-blue-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+          </label>
+          <a
+            href="/forgot-password"
+            class="text-sm text-blue-600 hover:underline">Forgot password?</a
+          >
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md"
+        >
+          Login
+        </button>
+      </form>
+
+      <!-- Register Link -->
+      <p class="mt-6 text-center text-sm text-gray-600">
+        Don't have an account?
+        <a href="/register" class="text-blue-600 hover:underline">Register</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Client-side validation -->
+  <data value={BACKEND} id="BACKEND"></data>
+  <script>
+    const BACKEND = document.getElementById("BACKEND").value;
+    console.log({ BACKEND });
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        console.log(e);
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+        const usernameError = document.getElementById("usernameError");
+        const passwordError = document.getElementById("passwordError");
+
+        let isValid = true;
+
+        // Reset error states
+        usernameError.classList.add("hidden");
+        passwordError.classList.add("hidden");
+
+        // Username validation
+        if (!username.value.trim()) {
+          usernameError.textContent = "Username atau email wajib diisi.";
+          usernameError.classList.remove("hidden");
+          isValid = false;
+        }
+
+        // Password validation
+        if (!password.value.trim()) {
+          passwordError.textContent = "Password wajib diisi.";
+          passwordError.classList.remove("hidden");
+          isValid = false;
+        } else if (password.value.length < 4) {
+          passwordError.textContent = "Password minimal 4 karakter.";
+          passwordError.classList.remove("hidden");
+          isValid = false;
+        }
+
+        // Jika valid, kirim form
+        if (isValid) {
+          const identifier = username.value;
+          const body = {
+            password: password.value,
+          };
+          if (identifier?.includes("@")) body.email = identifier;
+          if (identifier?.includes("0")) body.phone = identifier;
+          if (identifier?.length === 6) body.username = identifier;
+          (async () => {
+            try {
+              const response = await fetch(
+                BACKEND + "/savethevideo/api/user/login",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                }
+              );
+              const data = await response.json();
+              console.log({ data });
+            } catch (error) {
+              console.log({ error });
+            }
+          })();
+        }
+      });
+  </script>
+</Layout>

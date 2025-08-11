@@ -3,6 +3,7 @@
 import config from "./configs/config.js";
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from 'cors';
 
 // db init
 import './databases/db.js';
@@ -20,9 +21,20 @@ import { tiktok } from './routers/tiktok.js';
 import { rootHandler } from "./handlers/root-handler.js";
 import { aboutHandler } from "./handlers/about-handler.js";
 
+
 // app
 const app = express();
+app.use(cors());
 
+
+    app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*'); // Atau origin spesifik
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      next();
+    });
+
+app.use((req, res, next)=>{console.log(req.method);next()})
 // middleware untuk parsing request
 app.use(cookieParser());
 app.use(express.json());
@@ -38,6 +50,8 @@ app.use([
   globalLogging,
   responseWrapper // <-- Tambahkan wrapper di sini
 ]);
+
+
 
 // routers
 app.use('/savethevideo/api/user', user);

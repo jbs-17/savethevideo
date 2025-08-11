@@ -1,7 +1,52 @@
 ---
-
+const socialLinks = [
+  { name: "Twitter", href: "#", icon: "🐦" }, // ganti emoji/icon sesuai kebutuhan
+  { name: "Instagram", href: "#", icon: "📷" },
+  { name: "GitHub", href: "#", icon: "💻" },
+];
 ---
-<nav>
-  <img src="../assets/astro.svg" alt="astro" class="">
-  <h1>SaveTheVideo</h1>
+
+<nav class="sticky top-0 z-50 w-full bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="text-xl font-bold">LOGO</a>
+      </div>
+
+      <!-- Search bar (desktop) -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4">
+        <input
+          type="text"
+          placeholder="Search..."
+          class="w-full rounded-md border border-gray-300 px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Social media icons (desktop) -->
+      <div class="hidden md:flex items-center space-x-4">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.href}
+              aria-label={link.name}
+              class="text-lg hover:opacity-75"
+            >
+              {link.icon}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Mobile buttons -->
+      <div class="flex md:hidden items-center space-x-3">
+        <button aria-label="Search" class="p-2 rounded hover:bg-gray-100">
+          🔍
+        </button>
+        <button aria-label="Menu" class="p-2 rounded hover:bg-gray-100">
+          ☰
+        </button>
+      </div>
+    </div>
+  </div>
 </nav>

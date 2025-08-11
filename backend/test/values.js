@@ -26,10 +26,10 @@ function getValues(obj, values = []) {
 
 
 
-//const data =await jsonfile.readFile('./tt.json');
-const data = await jsonfile.readFile('../temp/tiktok-photo-slide.json');
-const z = getValues(data).filter(x => typeof x === 'string' && x.includes('tiktok'));
-console.log(z.length);
+// //const data =await jsonfile.readFile('./tt.json');
+// const data = await jsonfile.readFile('../temp/tiktok-photo-slide.json');
+// const z = getValues(data).filter(x => typeof x === 'string' && x.includes('tiktok'));
+// console.log(z.length);
 
 
-const vids = ['youtube', 'tiktok', 'facebook', 'instagram']
+// const vids = ['youtube', 'tiktok', 'facebook', 'instagram']
