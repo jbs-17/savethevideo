@@ -3,21 +3,17 @@ export const prerender = false; // 🚀 Biar SSR, bukan SSG
 
 const { videoid } = Astro.params;
 
-// Simulasi fetch data (bisa ganti ke API beneran)
-const videoData = {
-  id: videoid,
-  title: `Video ke-${videoid}`,
-  description: "Ini deskripsi video untuk testing SSR.",
-};
----
 
+// Simulasi fetch data (bisa ganti ke API beneran)
+const videoData = data
+---
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>{videoData.title}</title>
   </head>
   <body class="p-10 font-sans">
-    <h1 class="text-3xl font-bold">{videoData.title}</h1>
+    <h1 class="text-3xl font-bold">{JSON.stringify(data)}</h1>
     <p class="mt-4">{videoData.description}</p>
     <p class="mt-2 text-sm text-gray-500">ID Video: {videoData.id}</p>
   </body>

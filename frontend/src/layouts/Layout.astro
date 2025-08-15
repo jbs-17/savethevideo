@@ -1,4 +1,6 @@
 ---
+import Eruda from "../components/Eruda.astro";;
+
 import TopNav from "../components/TopNav.astro";
 import BottomFooter from "../components/BottomFooter.astro";
 const { title } = Astro.props;
@@ -13,6 +15,7 @@ console.log({ SITENAME });
     <title>{title} | {SITENAME}</title>
   </head>
   <body class="min-h-screen flex flex-col">
+    <Eruda/>
     <TopNav />
 
     <main class="flex-1">

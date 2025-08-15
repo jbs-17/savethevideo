@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const videourl = Astro.url.searchParams.get('url')
+
+
+const { BACKEND } = process.env;
+let data = await fetch(BACKEND + '/savethevideo/api/tiktok/video?url=' + videourl);
+data = await data.json();
+data = data.data;
+
+---
+<Layout title={data.title}>
+  
+  <section class="pt-3">
+    <h1 class="font-sans font-normal font-extrabold">
+      TIKTOK: {videourl} 
+    </h1>
+    <img class="" src={data.thumbnail}>
+    </img>
+    <ul class="">
+      <li class="">
+        id: {data.id}
+      </li>
+      <li class="">
+        fulltitle: {data.fulltitle}
+      </li>
+      <li class="">
+        description: {data.description}
+      </li>
+      <li class="">
+        upload_date: {data.upload_date}
+      </li>
+      <li class="">
+        channel: {data.channel}
+      </li>
+      <li class="">
+        duration: {data.duration}
+      </li>
+      <li class="">
+        channel: {data.channel}
+      </li>
+      <li class="">
+        channel: {data.channel}
+      </li>
+      
+    </ul>
+    
+  </section>
+  
+  </Layout>
