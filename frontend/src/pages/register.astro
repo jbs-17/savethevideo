@@ -3,18 +3,16 @@ import Layout from "../layouts/Layout.astro";
 const { BACKEND } = process.env;
 ---
 
-<Layout title="Login">
-  <section
-    class="min-h-[90vh] flex items-center justify-center bg-blend-hard-light bg-gray-200"
-  >
+<Layout title="Register">
+  <section class="min-h-[90vh] flex items-center justify-center bg-gray-200">
     <div class="w-full max-w-md bg-white rounded-lg shadow p-6">
-      <h1 class="text-2xl font-extrabold mb-6 text-center">Login</h1>
+      <h1 class="text-2xl font-extrabold mb-6 text-center">Register</h1>
 
-      <form id="loginForm" class="space-y-4" novalidate>
+      <form id="registerForm" class="space-y-4" novalidate>
         <!-- Email / Username -->
         <div>
           <label for="username" class="block text-sm font-medium text-gray-700"
-            >Email / Phone / Username</label
+            >Email / Phone</label
           >
           <input
             id="username"
@@ -39,6 +37,22 @@ const { BACKEND } = process.env;
           <p id="passwordError" class="text-sm text-red-600 mt-1 hidden"></p>
         </div>
 
+        <!-- Confirn Password -->
+        <div>
+          <label
+            for="password-x"
+            class="block text-sm font-medium text-gray-700"
+            >Confirm Password</label
+          >
+          <input
+            id="password-x"
+            name="password-x"
+            type="text"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+          />
+          <p id="passwordErrorx" class="text-sm text-red-600 mt-1 hidden"></p>
+        </div>
+
         <!-- Remember Me -->
         <!-- <div class="flex items-center justify-between">
           <label class="flex items-center">
@@ -57,16 +71,16 @@ const { BACKEND } = process.env;
         <!-- Submit -->
         <button
           type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md lowercase"
         >
-          Login
+          Register
         </button>
       </form>
 
       <!-- Register Link -->
       <p class="mt-6 text-center text-sm text-gray-600">
-        Don't have an account?
-        <a href="/register" class="text-blue-600 hover:underline">Register</a>
+        have an account?
+        <a href="/login" class="text-blue-600 hover:underline">Login</a>
       </p>
     </div>
   </section>
@@ -75,57 +89,79 @@ const { BACKEND } = process.env;
   <data value={BACKEND} id="BACKEND"></data>
   <script>
     const BACKEND = document.getElementById("BACKEND").value;
+    console.log({ BACKEND });
     document
-      .getElementById("loginForm")
+      .getElementById("registerForm")
       .addEventListener("submit", function (e) {
         e.preventDefault();
         const username = document.getElementById("username");
         const password = document.getElementById("password");
+        const passwordx = document.getElementById("password-x");
         const usernameError = document.getElementById("usernameError");
         const passwordError = document.getElementById("passwordError");
+        const passwordErrorx = document.getElementById("passwordErrorx");
 
         let isValid = true;
 
         // Reset error states
         usernameError.classList.add("hidden");
         passwordError.classList.add("hidden");
+        passwordErrorx.classList.add("hidden");
 
         // Username validation
         if (!username.value.trim()) {
-          usernameError.textContent = "Username or email or phone required";
+          usernameError.textContent = "phone number or email required";
           usernameError.classList.remove("hidden");
           isValid = false;
         }
 
         // Password validation
-        if (!password.value.trim()) {
-          passwordError.textContent = "Password field required";
+        if (!password.value.trim() || !passwordx.value.trim()) {
+          passwordError.textContent = "Password required";
+          passwordErrorx.textContent = "Password required";
           passwordError.classList.remove("hidden");
+          passwordErrorx.classList.remove("hidden");
           isValid = false;
         } else if (password.value.length < 4) {
           passwordError.textContent = "Password length minimun is 4 characters";
           passwordError.classList.remove("hidden");
           isValid = false;
+        } else if (password.value.trim() !== passwordx.value.trim()) {
+          passwordError.textContent = "Password and Confirmation not matched!";
+          passwordErrorx.textContent = "Password and Confirmation not matched!";
+          passwordError.classList.remove("hidden");
+          passwordErrorx.classList.remove("hidden");
+          isValid = false;
         }
 
-        // Jika valid, kirim form
         if (isValid) {
+          // Jika valid, kirim form
           const identifier = username.value;
           const body = {
             password: password.value,
           };
-          if (identifier?.includes("@")) body.email = identifier;
-          if (identifier?.includes("0")) body.phone = identifier;
-          if (identifier?.length === 6) body.username = identifier;
+          if (identifier?.includes("@")) {
+            body.email = identifier;
+          } else if (identifier?.includes("0")) {
+            body.phone = identifier;
+          } else {
+            usernameError.textContent = 'invalid phone or email'
+            usernameError.classList.remove("hidden");
+            return;
+          }
+
           (async () => {
             try {
               password?.setAttribute("dissable", "");
-              const response = await fetch(BACKEND + '/savethevideo/api/user/login', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-                credentials: "include",
-              });
+              const response = await fetch(
+                BACKEND + "/savethevideo/api/user/register",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(body),
+                  credentials: "include",
+                }
+              );
               // const data = await response.json();
             } catch (error) {
               passwordError.textContent = error?.message?.includes("JSON")

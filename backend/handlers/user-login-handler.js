@@ -24,6 +24,7 @@ export const userLogin = async (req, res) => {
     try {
         const loggedin = (await userLoginService(req.body[identifier[0]], password));
         if (loggedin?.status) {
+              res.cookie('s1h', loggedin.sessionID, { maxAge: 1000 * 60 * 5 });
             res.success('login succesfull', loggedin);
         } else {
             res.fail("login failed", loggedin);

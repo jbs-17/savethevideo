@@ -11,6 +11,7 @@ config.tempdir = fromWorkDir('/temp');
 config.viewsdir = fromWorkDir('/views');
 config.PORT = process.env.PORT || 3000;
 config.MONGODB_URI = process.env.MONGODB_URI;
+config.FRONTEND = process.env.FRONTEND;
 console.log(config);
 
 

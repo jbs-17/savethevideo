@@ -22,17 +22,16 @@ import { rootHandler } from "./handlers/root-handler.js";
 import { aboutHandler } from "./handlers/about-handler.js";
 
 
-// app
+//app
 const app = express();
-app.use(cors());
+
+//cors
+app.use(cors({
+ origin: [config.FRONTEND, 'http://localhost:4321/'], // Replace with your actual frontend domain
+ credentials: true,
+}));
 
 
-    app.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin', '*'); // Atau origin spesifik
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      next();
-    });
 
 app.use((req, res, next)=>{console.log(req.method);next()})
 // middleware untuk parsing request
